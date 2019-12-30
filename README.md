@@ -13,6 +13,6 @@
 02. sudo git init
 
 03. sudo git add .
-04. sudo git commit -m "First Commit"
+04. sudo git commit -m "First Commit or any suitable message"
 05. sudo git remote add origin https://github.com/AshikDev/sat.git
 06. sudo git push origin dev

@@ -71,7 +71,7 @@ $this->title = 'Dashboard';
     <!-- /.col -->
     <!-- /.col -->
     <div class="col-md-4 col-sm-6 col-xs-12">
-        <a href="">
+        <a href="#">
             <div class="info-box">
                 <span class="info-box-icon bg-purple"><i class="fa fa-plus-circle"></i></span>
 
