@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\BackgroundView;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -65,7 +66,10 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return $this->render('index');
+        $viewModels = BackgroundView::find()->all();
+        return $this->render('index', [
+            'viewModels' => $viewModels
+        ]);
     }
 
     /**

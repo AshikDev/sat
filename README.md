@@ -16,3 +16,6 @@
 04. sudo git commit -m "First Commit or any suitable message"
 05. sudo git remote add origin https://github.com/AshikDev/sat.git
 06. sudo git push origin dev
+
+# Some short cut for PhpStorm
+01. shift + shift -> search in all files

@@ -12,6 +12,11 @@ $config = [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
     ],
+    'modules' => [
+        'markdown' => [
+            'class' => 'kartik\markdown\Module',
+        ]
+    ],
     'components' => [
         'view' => [
             'theme' => [
