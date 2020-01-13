@@ -134,7 +134,7 @@ $verticalColumn['short_description'] = [];
                                                                         </span>
                                                                             <div class="info-box-content">
                                                                                 <span class="info-box-text" style="font-size: 12px;"><?= $file->title; ?></span>
-                                                                                <span class="info-box-number" style="font-size: 12px;"><?= $file->subtitle; ?></span>
+                                                                                <span class="info-box-text" style="font-weight: bold; font-size: 12px; text-transform: capitalize;"><?= $file->subtitle; ?></span>
 
                                                                                 <div class="progress">
                                                                                     <div class="progress-bar"
