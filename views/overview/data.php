@@ -127,14 +127,14 @@ $verticalColumn['short_description'] = [];
                                                             if ($file->horizontal_id == $horizontal->id):
                                                                 if ($file->vertical_id == $vertical->id):
                                                                     ?>
-                                                                    <div class="col-md-4">
+                                                                    <div class="col-md-6">
                                                                         <div class="info-box bg-aqua">
                                                                         <span class="info-box-icon">
                                                                             <i class="fa <?= $file->icon; ?>"></i>
                                                                         </span>
                                                                             <div class="info-box-content">
-                                                                                <span class="info-box-text"><?= $file->title; ?></span>
-                                                                                <span class="info-box-number"><?= $file->subtitle; ?></span>
+                                                                                <span class="info-box-text" style="font-size: 12px;"><?= $file->title; ?></span>
+                                                                                <span class="info-box-number" style="font-size: 12px;"><?= $file->subtitle; ?></span>
 
                                                                                 <div class="progress">
                                                                                     <div class="progress-bar"

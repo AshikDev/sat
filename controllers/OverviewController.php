@@ -162,9 +162,13 @@ class OverviewController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $project_id = $model->project_id;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            $model->project_id = $project_id;
+            if($model->save()) {
+                Yii::$app->session->setFlash('success', 'Project overview has successfully been saved.');
+            }
         }
 
         return $this->render('update', [
