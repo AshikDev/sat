@@ -73,7 +73,7 @@ $verticalColumn['short_description'] = [];
                                                 ?>
                                                 <!-- timeline item -->
                                                 <li>
-                                                    <i class="fa <?= (++$i == $count) ? 'fa-arrow-right' : 'fa-arrow-down '; ?> bg-blue"></i>
+                                                    <i class="fa <?= ($i++ == 0) ? 'bg-red' : 'bg-blue'; ?> "></i>
 
                                                     <div class="timeline-item">
 
@@ -171,7 +171,7 @@ $verticalColumn['short_description'] = [];
                                                         ?>
                                                         <!-- timeline item -->
                                                         <li>
-                                                            <i class="fa <?= (++$a == $limit) ? 'fa-arrow-right' : 'fa-arrow-down '; ?>  bg-blue"></i>
+                                                            <i class="fa <?= ($a++ == 0) ? 'bg-red' : 'bg-blue'; ?> "></i>
 
                                                             <div class="timeline-item">
 
@@ -215,36 +215,6 @@ $verticalColumn['short_description'] = [];
 </div>
 
 <style>
-    .overlay {
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        /* left: 15px; */
-        /* right: 38px; */
-        height: 90px;
-        width: 240px;
-        opacity: 0;
-        transition: .5s ease;
-        background-color: #000000;
-        /* padding: 5px 5px; */
-    }
-
-    .overlay-item:hover .overlay {
-        opacity: 1;
-    }
-
-    .text {
-        color: white;
-        font-size: 14px;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        -webkit-transform: translate(-50%, -50%);
-        -ms-transform: translate(-50%, -50%);
-        transform: translate(-50%, -50%);
-        text-align: center;
-    }
-
     html {
         scroll-behavior: smooth;
     }
