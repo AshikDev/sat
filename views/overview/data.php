@@ -127,7 +127,7 @@ $verticalColumn['short_description'] = [];
                                                             if ($file->horizontal_id == $horizontal->id):
                                                                 if ($file->vertical_id == $vertical->id):
                                                                     ?>
-                                                                    <div class="col-md-6">
+                                                                    <div class="col-md-6" data-toggle="popover" title="Metadata" data-content="<?= $file->metadata ?>">
                                                                         <div class="info-box bg-aqua">
                                                                         <span class="info-box-icon">
                                                                             <i class="fa <?= $file->icon; ?>"></i>
@@ -249,3 +249,20 @@ $verticalColumn['short_description'] = [];
         scroll-behavior: smooth;
     }
 </style>
+
+<?php
+
+$this->registerJs("
+    $('[data-toggle=\"popover\"]').popover({
+        placement : 'top',
+        trigger : 'hover'
+    });
+", \yii\web\View::POS_READY);
+
+?>
+
+<script>
+    $(document).ready(function(){
+        $('[data-toggle="popover"]').popover();
+    });
+</script>
