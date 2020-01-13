@@ -74,7 +74,8 @@ class OverviewController extends Controller
             'projectModel' => $projectModel,
             'horizontalModel' => $horizontalModel,
             'verticalModel' => $verticalModel,
-            'fileModel' => $fileModel
+            'fileModel' => $fileModel,
+            'view_id' => $view_id
         ]);
     }
 
@@ -88,18 +89,24 @@ class OverviewController extends Controller
         $model = new Overview();
 
         if ($model->load(Yii::$app->request->post())) {
-            $model->project_id = $project_id;
             switch (\Yii::$app->request->post('submit')) {
                 case 'more':
+                    $model->project_id = $project_id;
                     if($model->save()) {
                         Yii::$app->session->setFlash('success', 'Project overview has successfully been saved.');
                         return $this->refresh();
                     }
                     break;
                 case 'next':
-                    if($model->save()) {
-                        Yii::$app->session->setFlash('success', 'Project overview has successfully been saved.');
+                    $modelOverview = Overview::find()->where(['project_id' => $project_id])->one();
+                    if((!isset($model->name)) && !empty($modelOverview)) {
                         return $this->redirect(['vertical/create', 'project_id' => $project_id]);
+                    } else {
+                        $model->project_id = $project_id;
+                        if($model->save()) {
+                            Yii::$app->session->setFlash('success', 'Project overview has successfully been saved.');
+                            return $this->redirect(['vertical/create', 'project_id' => $project_id]);
+                        }
                     }
                     break;
             }
@@ -107,6 +114,41 @@ class OverviewController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+        ]);
+    }
+
+    public function actionEdit($project_id, $project_name)
+    {
+        $model = new Overview();
+
+        if ($model->load(Yii::$app->request->post())) {
+            switch (\Yii::$app->request->post('submit')) {
+                case 'more':
+                    $model->project_id = $project_id;
+                    if($model->save()) {
+                        Yii::$app->session->setFlash('success', 'Project overview has successfully been saved.');
+                        return $this->refresh();
+                    }
+                    break;
+                case 'next':
+                    $modelOverview = Overview::find()->where(['project_id' => $project_id])->one();
+                    if((!isset($model->name)) && !empty($modelOverview)) {
+                        return $this->redirect(['vertical/edit', 'project_id' => $project_id, 'project_name' => $project_name]);
+                    } else {
+                        $model->project_id = $project_id;
+                        if($model->save()) {
+                            Yii::$app->session->setFlash('success', 'Project overview has successfully been saved.');
+                            return $this->redirect(['vertical/edit', 'project_id' => $project_id, 'project_name' => $project_name]);
+                        }
+                    }
+                    break;
+            }
+        }
+
+        return $this->render('edit', [
+            'model' => $model,
+            'project_id' => $project_id,
+            'project_name' => $project_name
         ]);
     }
 

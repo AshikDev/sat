@@ -3,10 +3,11 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use kartik\markdown\MarkdownEditor;
-
 ?>
 
-<?php $form = ActiveForm::begin(); ?>
+<?php $form = ActiveForm::begin([
+    'enableClientValidation' => false,
+]); ?>
 
 <div class="row">
     <div class="col-md-12">

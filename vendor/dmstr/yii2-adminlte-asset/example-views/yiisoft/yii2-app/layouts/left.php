@@ -90,12 +90,12 @@
                             [
                                 'label' => 'Create New',
                                 'icon' => 'plus',
-                                'url' => ['/vertical/create'],
+                                'url' => ['/depth/create'],
                             ],
                             [
                                 'label' => 'Depth List',
                                 'icon' => 'list',
-                                'url' => ['/vertical/index'],
+                                'url' => ['/depth/index'],
                             ]
                         ]
                     ],
@@ -114,6 +114,11 @@
                                 'label' => 'Project List',
                                 'icon' => 'list',
                                 'url' => ['/project/index'],
+                            ],
+                            [
+                                'label' => 'Overview List',
+                                'icon' => 'list',
+                                'url' => ['/overview/index'],
                             ]
                         ]
                     ],

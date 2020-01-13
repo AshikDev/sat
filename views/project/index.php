@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
+
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\ProjectSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
@@ -10,36 +11,38 @@ use yii\widgets\Pjax;
 $this->title = 'Projects';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="project-index">
+<div class="row">
+    <div class="col-md-12">
+        <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">List of Views</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+                <?php Pjax::begin(); ?>
 
-    <p>
-        <?= Html::a('Create Project', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
+                <?= GridView::widget([
+                    'dataProvider' => $dataProvider,
+                    'filterModel' => $searchModel,
+                    'columns' => [
+                        ['class' => 'yii\grid\SerialColumn'],
 
-    <?php Pjax::begin(); ?>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+                        'name',
+                        'description:ntext',
+                        'date_from',
+                        'date_to',
+                        //'logo',
+                        //'extra',
 
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+                        ['class' => 'yii\grid\ActionColumn'],
+                    ],
+                ]); ?>
 
-            'id',
-            'name',
-            'description:ntext',
-            'overview:ntext',
-            'date_from',
-            //'date_to',
-            //'logo',
-            //'extra',
+                <?php Pjax::end(); ?>
 
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
+            </div>
 
-    <?php Pjax::end(); ?>
-
+        </div>
+    </div>
 </div>

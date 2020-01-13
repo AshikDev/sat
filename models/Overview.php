@@ -48,7 +48,7 @@ class Overview extends \yii\db\ActiveRecord
             'id' => 'ID',
             'title' => 'Title',
             'paragraph' => 'Paragraph',
-            'project_id' => 'Project ID',
+            'project_id' => 'Project',
             'extra' => 'Extra',
         ];
     }

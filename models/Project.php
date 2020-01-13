@@ -35,13 +35,14 @@ class Project extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'description', 'logo'], 'required'],
+            [['name', 'description'], 'required'],
             [['date_from', 'date_to'], 'required', 'message' => 'Project duration cannot be blank.'],
             [['description', 'overview'], 'string'],
             [['date_from', 'date_to'], 'safe'],
             [['name'], 'string', 'max' => 150],
             [['extra'], 'string', 'max' => 80],
             ['logo', 'file', 'skipOnEmpty' => true, 'maxSize' => 10002400, 'extensions' => 'jpg, jpeg, png'],
+            [['logo'], 'required', 'on'=> 'create']
         ];
     }
 

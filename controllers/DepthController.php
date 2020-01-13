@@ -2,19 +2,19 @@
 
 namespace app\controllers;
 
+use app\models\BackgroundView;
 use Yii;
-use app\models\Project;
-use app\models\ProjectSearch;
-use yii\data\ActiveDataProvider;
+use app\models\Depth;
+use app\models\DepthSearch;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\web\UploadedFile;
 
 /**
- * ProjectController implements the CRUD actions for Project model.
+ * DepthController implements the CRUD actions for Depth model.
  */
-class ProjectController extends Controller
+class DepthController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -32,12 +32,12 @@ class ProjectController extends Controller
     }
 
     /**
-     * Lists all Project models.
+     * Lists all Depth models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new ProjectSearch();
+        $searchModel = new DepthSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -46,20 +46,8 @@ class ProjectController extends Controller
         ]);
     }
 
-    public function actionList($view_id)
-    {
-        $searchModel = new ProjectSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        return $this->render('list', [
-            'dataProvider' => $dataProvider,
-            'searchModel' => $searchModel,
-            'view_id' => $view_id
-        ]);
-    }
-
     /**
-     * Displays a single Project model.
+     * Displays a single Depth model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -72,30 +60,29 @@ class ProjectController extends Controller
     }
 
     /**
-     * Creates a new Project model.
+     * Creates a new Depth model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Project();
+        $model = new Depth();
 
-        if ($model->load(Yii::$app->request->post())) {
-            $upload = UploadedFile::getInstance($model, 'logo');
-            $model->logo = time() . Yii::$app->user->identity->id . '.' . $upload->extension;
-            if($model->save()) {
-                $upload->saveAs(Yii::getAlias('@app/web/img') . '/' . $model->logo);
-                return $this->redirect(['overview/create', 'project_id' => $model->id]);
-            }
+        $viewModel = ArrayHelper::map(BackgroundView::find()->all(), 'id', 'name');
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', 'The depth level has successfully been created.');
+            $model->view_id = '';
         }
 
         return $this->render('create', [
             'model' => $model,
+            'viewModel' => $viewModel
         ]);
     }
 
     /**
-     * Updates an existing Project model.
+     * Updates an existing Depth model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -104,30 +91,21 @@ class ProjectController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
-        $logo = $model->logo;
 
-        if ($model->load(Yii::$app->request->post())) {
-            $upload = UploadedFile::getInstance($model, 'logo');
-            if(!empty($upload)) {
-                $model->logo = time() . Yii::$app->user->identity->id . '.' . $upload->extension;
-            } else {
-                $model->logo = $logo;
-            }
-            if($model->save()) {
-                if(!empty($upload)) {
-                    $upload->saveAs(Yii::getAlias('@app/web/img') . '/' . $model->logo);
-                }
-                return $this->redirect(['overview/edit', 'project_id' => $model->id, 'project_name' => $model->name]);
-            }
+        $viewModel = ArrayHelper::map(BackgroundView::find()->all(), 'id', 'name');
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', 'The depth level has successfully been created.');
         }
 
         return $this->render('update', [
             'model' => $model,
+            'viewModel' => $viewModel
         ]);
     }
 
     /**
-     * Deletes an existing Project model.
+     * Deletes an existing Depth model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -141,15 +119,15 @@ class ProjectController extends Controller
     }
 
     /**
-     * Finds the Project model based on its primary key value.
+     * Finds the Depth model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Project the loaded model
+     * @return Depth the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Project::findOne($id)) !== null) {
+        if (($model = Depth::findOne($id)) !== null) {
             return $model;
         }
 

@@ -4,22 +4,24 @@ namespace app\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Overview;
+use app\models\Depth;
 
 /**
- * OverviewSearch represents the model behind the search form of `app\models\Overview`.
+ * DepthSearch represents the model behind the search form of `app\models\Depth`.
  */
-class OverviewSearch extends Overview
+class DepthSearch extends Depth
 {
-    public $projectName;
     /**
      * {@inheritdoc}
      */
+
+    public $horizontalName;
+    public $viewName;
+
     public function rules()
     {
         return [
-            [['id'], 'integer'],
-            [['title', 'paragraph', 'extra', 'projectName'], 'safe'],
+            [['name', 'horizontalName', 'viewName'], 'safe'],
         ];
     }
 
@@ -41,9 +43,8 @@ class OverviewSearch extends Overview
      */
     public function search($params)
     {
-        $query = Overview::find();
-
-        $query->with("project");
+        $query = Depth::find();
+        $query->with(['horizontal', 'view']);
 
         // add conditions that should always apply here
 
@@ -64,13 +65,16 @@ class OverviewSearch extends Overview
             'id' => $this->id
         ]);
 
-        $query->andFilterWhere(['like', 'title', $this->title])
-            ->andFilterWhere(['like', 'paragraph', $this->paragraph])
-            ->andFilterWhere(['like', 'extra', $this->extra]);
+        $query->andFilterWhere(['like', 'name', $this->name]);
 
-        $query->joinWith(['project'=>function ($q) {
-            $q->where('project.name LIKE "%' .
-                $this->projectName . '%"');
+        $query->joinWith(['horizontal'=>function ($q) {
+            $q->where('horizontal.name LIKE "%' .
+                $this->horizontalName . '%"');
+        }]);
+
+        $query->joinWith(['view'=>function ($q) {
+            $q->where('background_view.name LIKE "%' .
+                $this->viewName . '%"');
         }]);
 
         return $dataProvider;

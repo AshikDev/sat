@@ -56,6 +56,10 @@ use kartik\file\FileInput;
                 <?= $form->field($model, 'logo')->widget(FileInput::className(), [
                     'options' => ['accept' => 'image/*', 'multiple' => false],
                     'pluginOptions' => [
+                        'initialPreview'=>[
+                            ($model->logo != null) ? Html::img( Yii::$app->request->baseUrl . "/img/" . $model->logo) : '',
+                        ],
+                        'overwriteInitial'=>true,
                         'showUpload' => false
                     ]
                 ]);?>
@@ -64,7 +68,7 @@ use kartik\file\FileInput;
             <!-- /.box-body -->
 
             <div class="box-footer">
-                <?= Html::submitButton('Next', ['class' => 'btn btn-primary']) ?>
+                <?= Html::submitButton('Next <i class="fa fa-chevron-right"></i>', ['class' => 'btn btn-primary']) ?>
             </div>
         </div>
     </div>

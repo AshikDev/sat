@@ -2,9 +2,9 @@
 
 $this->title = '';
 
-$this->params['breadcrumbs'][] = 'Select View';
-$this->params['breadcrumbs'][] = 'Projects';
-$this->params['breadcrumbs'][] = 'iStopFall';
+$this->params['breadcrumbs'][] = ['label' => 'Select View', 'url' => ['site/index']];
+$this->params['breadcrumbs'][] = ['label' => 'Projects', 'url' => ['project/list?view_id=' . $view_id]];
+$this->params['breadcrumbs'][] = $projectModel->name;
 
 $i = 0;
 $verticalArray = [];
@@ -164,30 +164,32 @@ $verticalColumn['short_description'] = [];
                                             <ul class="timeline timeline-inverse">
 
                                                 <?php
-                                                $limit = count($verticalArray['name']);
-                                                $a = 0;
-                                                for($i = 0; $i < $limit; $i++) :
-                                                ?>
-                                                <!-- timeline item -->
-                                                <li>
-                                                    <i class="fa <?= (++$a == $limit) ? 'fa-arrow-right' : 'fa-arrow-down '; ?>  bg-blue"></i>
+                                                if (isset($verticalArray) && !empty($verticalArray)) :
+                                                    $limit = count($verticalArray['name']);
+                                                    $a = 0;
+                                                    for ($i = 0; $i < $limit; $i++) :
+                                                        ?>
+                                                        <!-- timeline item -->
+                                                        <li>
+                                                            <i class="fa <?= (++$a == $limit) ? 'fa-arrow-right' : 'fa-arrow-down '; ?>  bg-blue"></i>
 
-                                                    <div class="timeline-item">
+                                                            <div class="timeline-item">
 
-                                                        <h3 class="timeline-header">
-                                                            <a href="#">
-                                                                <?= $verticalArray['name'][$i]; ?>
-                                                            </a>
-                                                        </h3>
+                                                                <h3 class="timeline-header">
+                                                                    <a href="#">
+                                                                        <?= $verticalArray['name'][$i]; ?>
+                                                                    </a>
+                                                                </h3>
 
-                                                        <div class="timeline-body">
-                                                            <?= $verticalArray['short_description'][$i]; ?>....
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                                <!-- END timeline item -->
-                                                <?php
-                                                endfor;
+                                                                <div class="timeline-body">
+                                                                    <?= $verticalArray['short_description'][$i]; ?>....
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <!-- END timeline item -->
+                                                    <?php
+                                                    endfor;
+                                                endif;
                                                 ?>
                                             </ul>
                                         </div>

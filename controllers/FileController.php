@@ -186,6 +186,49 @@ class FileController extends Controller
         ]);
     }
 
+    public function actionEdit($project_id, $project_name)
+    {
+        $model = new File();
+
+        $viewModel = ArrayHelper::map(BackgroundView::find()->all(), 'id', 'name');
+
+        if ($model->load(Yii::$app->request->post())) {
+
+            $upload = UploadedFile::getInstance($model, 'name');
+            $model->name = time() . Yii::$app->user->identity->id . '.' . $upload->extension;
+
+            $fileProperties = self::getFileProperties($upload->extension);
+            $model->project_id = $project_id;
+            $model->file_type = $fileProperties['name'];
+            $model->icon = $fileProperties['fa'];
+
+            $submit = \Yii::$app->request->post('submit');
+            switch ($submit) {
+                case 'more':
+                    if($model->save()) {
+                        $upload->saveAs(Yii::getAlias('@app/web/img') . '/' . $model->name);
+                        $model->view_id = '';
+                        Yii::$app->session->setFlash('success', 'The file has successfully been saved.');
+                        // return $this->refresh();
+                    }
+                    break;
+                case 'next':
+                    if($model->save()) {
+                        Yii::$app->session->setFlash('success', 'The file has successfully been saved.');
+                        return $this->redirect(['site/index']);
+                    }
+                    break;
+            }
+        }
+
+        return $this->render('edit', [
+            'model' => $model,
+            'viewModel' => $viewModel,
+            'project_id' => $project_id,
+            'project_name' => $project_name
+        ]);
+    }
+
     /**
      * Updates an existing File model.
      * If update is successful, the browser will be redirected to the 'view' page.

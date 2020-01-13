@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\BackgroundView;
+use app\models\Depth;
 use app\models\Horizontal;
 use Yii;
 use app\models\Vertical;
@@ -68,6 +69,13 @@ class VerticalController extends Controller
         return $value;
     }
 
+    public function getDepth($id)
+    {
+        $data = Depth::find()->where(['horizontal_id'=>$id])->select(['name as id','name as name'])->asArray()->all();
+        $value = (count($data) == 0) ? ['' => ''] : $data;
+        return $value;
+    }
+
     public function actionHorizontal() {
         $out = [];
         if (isset($_POST['depdrop_parents'])) {
@@ -75,6 +83,20 @@ class VerticalController extends Controller
             if ($parents != null) {
                 $view_id = $parents[0];
                 $out = self::getHorizontal($view_id);
+                echo Json::encode(['output'=>$out, 'selected'=>'']);
+                return;
+            }
+        }
+        echo Json::encode(['output'=>'', 'selected'=>'']);
+    }
+
+    public function actionDepth() {
+        $out = [];
+        if (isset($_POST['depdrop_parents'])) {
+            $parents = $_POST['depdrop_parents'];
+            if ($parents != null) {
+                $horizontal_id = $parents[0];
+                $out = self::getDepth($horizontal_id);
                 echo Json::encode(['output'=>$out, 'selected'=>'']);
                 return;
             }
@@ -116,6 +138,40 @@ class VerticalController extends Controller
         return $this->render('create', [
             'model' => $model,
             'viewModel' => $viewModel
+        ]);
+    }
+
+    public function actionEdit($project_id, $project_name)
+    {
+        $model = new Vertical();
+
+        $viewModel = ArrayHelper::map(BackgroundView::find()->all(), 'id', 'name');
+
+        if ($model->load(Yii::$app->request->post())) {
+            $submit = \Yii::$app->request->post('submit');
+            switch ($submit) {
+                case 'more':
+                    $model->project_id = $project_id;
+                    if($model->save()) {
+                        Yii::$app->session->setFlash('success', 'The depth has successfully been saved.');
+                        return $this->refresh();
+                    }
+                    break;
+                case 'next':
+                    $model->project_id = $project_id;
+                    if($model->save()) {
+                        Yii::$app->session->setFlash('success', 'The  overview has successfully been saved.');
+                        return $this->redirect(['file/edit', 'project_id' => $project_id, 'project_name' => $project_name]);
+                    }
+                    break;
+            }
+        }
+
+        return $this->render('edit', [
+            'model' => $model,
+            'viewModel' => $viewModel,
+            'project_id' => $project_id,
+            'project_name' => $project_name
         ]);
     }
 

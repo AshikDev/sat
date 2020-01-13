@@ -5,14 +5,18 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Project */
 
-$this->title = 'Update Project: ' . $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Projects', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->title = 'Project';
+$this->params['subTitle'] = 'Update  Project: ' . $model->name;
+
+$this->params['breadcrumbs'][] = '01. ' . $this->params['subTitle'];
+
+$this->params['wizard'][] = ['label' => '01. ' . $this->params['subTitle'], 'url' => ['create']];
+$this->params['wizard'][] = '02. Update Overview';
+$this->params['wizard'][] = '03. Update Depth';
+$this->params['wizard'][] = '04. Update Files';
+
 ?>
 <div class="project-update">
-
-    <h1><?= Html::encode($this->title) ?></h1>
 
     <?= $this->render('_form', [
         'model' => $model,

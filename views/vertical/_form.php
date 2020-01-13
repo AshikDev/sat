@@ -43,7 +43,17 @@ use yii\widgets\ActiveForm;
 
                 ?>
 
-                <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+                <?php
+
+                echo $form->field($model, 'name')->widget(\kartik\depdrop\DepDrop::classname(), [
+                    'pluginOptions'=>[
+                        'depends'=>[Html::getInputId($model, 'horizontal_id')],
+                        'placeholder'=>'Select a depth',
+                        'url'=> \yii\helpers\Url::to(['/vertical/depth'])
+                    ]
+                ]);
+
+                ?>
 
                 <?= $form->field($model, 'description')->textarea(['rows' => 6]) ?>
 
