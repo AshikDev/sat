@@ -51,7 +51,7 @@ class File extends \yii\db\ActiveRecord
             [['project_id'], 'exist', 'skipOnError' => true, 'targetClass' => Project::className(), 'targetAttribute' => ['project_id' => 'id']],
             [['vertical_id'], 'exist', 'skipOnError' => true, 'targetClass' => Vertical::className(), 'targetAttribute' => ['vertical_id' => 'id']],
             [['view_id'], 'exist', 'skipOnError' => true, 'targetClass' => BackgroundView::className(), 'targetAttribute' => ['view_id' => 'id']],
-            ['name', 'file', 'skipOnEmpty' => true, 'maxSize' => 10002400]
+            ['name', 'file', 'skipOnEmpty' => true, 'maxSize' => 1000240000]
         ];
     }
 

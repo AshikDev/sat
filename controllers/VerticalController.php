@@ -158,10 +158,15 @@ class VerticalController extends Controller
                     }
                     break;
                 case 'next':
-                    $model->project_id = $project_id;
-                    if($model->save()) {
-                        Yii::$app->session->setFlash('success', 'The  overview has successfully been saved.');
+                    $modelVertical = Vertical::find()->where(['project_id' => $project_id])->one();
+                    if((!isset($model->name)) && !empty($modelVertical)) {
                         return $this->redirect(['file/edit', 'project_id' => $project_id, 'project_name' => $project_name]);
+                    } else {
+                        $model->project_id = $project_id;
+                        if($model->save()) {
+                            Yii::$app->session->setFlash('success', 'The  overview has successfully been saved.');
+                            return $this->redirect(['file/edit', 'project_id' => $project_id, 'project_name' => $project_name]);
+                        }
                     }
                     break;
             }
