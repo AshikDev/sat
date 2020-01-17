@@ -105,57 +105,59 @@ $verticalColumn['short_description'] = [];
                                             <?php
                                             $x = 0;
                                             foreach ($verticalModel as $vertical):
-                                                ?>
-                                                <!-- Post -->
-                                                <div class="post clearfix">
-                                                    <?php
-                                                    if ($vertical->horizontal_id == $horizontal->id):
-                                                        $verticalArray['name'][$x] = $vertical->name;
-                                                        $verticalArray['short_description'][$x] = substr($vertical->description, 0, 70);
-                                                        $x++;
-                                                        ?>
+                                                if ($vertical->horizontal_id == $horizontal->id):
+                                                    $verticalArray['name'][$x] = $vertical->name;
+                                                    $verticalArray['short_description'][$x] = substr($vertical->description, 0, 70);
+                                                    $x++;
+                                                    ?>
+                                                    <!-- Post -->
+                                                    <div class="post <?= ($x == 1) ? '' : 'clearfix'; ?>">
                                                         <h3><?= $vertical->name; ?></h3>
                                                         <p>
                                                             <?= $vertical->description; ?>
                                                         </p>
-                                                    <?php
-                                                    endif;
-                                                    ?>
-                                                    <div class="row">
-                                                        <?php
-                                                        foreach ($fileModel as $file):
-                                                            if ($file->horizontal_id == $horizontal->id):
-                                                                if ($file->vertical_id == $vertical->id):
-                                                                    ?>
-                                                                    <div class="col-md-6" data-toggle="popover" title="Metadata" data-content="<?= $file->metadata ?>">
-                                                                        <div class="info-box bg-aqua">
-                                                                        <span class="info-box-icon">
-                                                                            <i class="fa <?= $file->icon; ?>"></i>
-                                                                        </span>
-                                                                            <div class="info-box-content">
-                                                                                <span class="info-box-text" style="font-size: 12px;"><?= $file->title; ?></span>
-                                                                                <span class="info-box-text" style="font-weight: bold; font-size: 12px; text-transform: capitalize;"><?= $file->subtitle; ?></span>
+                                                        <div class="row">
+                                                            <?php
+                                                            foreach ($fileModel as $file):
+                                                                if ($file->horizontal_id == $horizontal->id):
+                                                                    if ($file->vertical_id == $vertical->id):
+                                                                        ?>
+                                                                        <a href="<?= Yii::$app->request->baseUrl; ?>/data/download?file_name=<?= $file->name; ?>">
+                                                                            <div class="col-md-6" data-toggle="popover"
+                                                                                 title="Metadata"
+                                                                                 data-content="<?= $file->metadata ?>">
+                                                                                <div class="info-box bg-aqua">
+                                                                                <span class="info-box-icon">
+                                                                                    <i class="fa <?= $file->icon; ?>"></i>
+                                                                                </span>
+                                                                                    <div class="info-box-content">
+                                                                                    <span class="info-box-text"
+                                                                                          style="font-size: 12px;"><?= $file->title; ?></span>
+                                                                                        <span class="info-box-text"
+                                                                                              style="font-weight: bold; font-size: 12px; text-transform: capitalize;"><?= $file->subtitle; ?></span>
 
-                                                                                <div class="progress">
-                                                                                    <div class="progress-bar"
-                                                                                         style="width: <?= number_format($file->estimate_time, 0); ?>%"></div>
-                                                                                </div>
-                                                                                <span class="progress-description">
+                                                                                        <div class="progress">
+                                                                                            <div class="progress-bar"
+                                                                                                 style="width: <?= number_format($file->estimate_time, 0); ?>%"></div>
+                                                                                        </div>
+                                                                                        <span class="progress-description">
                                                                                     <?= $file->estimate_time; ?> Min
                                                                                 </span>
+                                                                                    </div>
+                                                                                    <!-- /.info-box-content -->
+                                                                                </div>
                                                                             </div>
-                                                                            <!-- /.info-box-content -->
-                                                                        </div>
-                                                                    </div>
-                                                                <?php
+                                                                        </a>
+                                                                    <?php
+                                                                    endif;
                                                                 endif;
-                                                            endif;
-                                                        endforeach;
-                                                        ?>
+                                                            endforeach;
+                                                            ?>
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <!-- /.post -->
-                                            <?php
+                                                    <!-- /.post -->
+                                                <?php
+                                                endif;
                                             endforeach;
                                             ?>
 
@@ -232,7 +234,7 @@ $this->registerJs("
 ?>
 
 <script>
-    $(document).ready(function(){
+    $(document).ready(function () {
         $('[data-toggle="popover"]').popover();
     });
 </script>

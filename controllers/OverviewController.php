@@ -61,6 +61,16 @@ class OverviewController extends Controller
         ]);
     }
 
+    public function actionDownload($file_name) {
+        $path = Yii::getAlias('@app/web/img/') . $file_name;
+
+        if (file_exists($path)) {
+            return Yii::$app->response->sendFile($path, $file_name);
+        }
+
+        Yii::app()->end();
+    }
+
     public function actionData($view_id, $project_id)
     {
         $model = Overview::find()->where(['project_id' => $project_id])->all();
