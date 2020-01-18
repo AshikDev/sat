@@ -71,13 +71,22 @@ class OverviewController extends Controller
         Yii::app()->end();
     }
 
-    public function actionData($view_id, $project_id)
+    public function setSessionView($view_id, $icon) {
+        Yii::$app->session->set('icon', $icon);
+        Yii::$app->session->set('view_id', $view_id);
+    }
+
+    public function actionData($view_id, $project_id, $icon = null)
     {
         $model = Overview::find()->where(['project_id' => $project_id])->all();
         $projectModel = Project::find()->where(['id' => $project_id])->one();
         $horizontalModel = Horizontal::find()->where(['view_id' => $view_id])->orderBy(['sort_order' => SORT_ASC, 'id' => SORT_ASC])->all();
         $verticalModel = Vertical::find()->where(['view_id' => $view_id, 'project_id' => $project_id])->orderBy(['sort_order' => SORT_ASC, 'id' => SORT_ASC])->all();
         $fileModel = File::find()->where(['view_id' => $view_id, 'project_id' => $project_id])->orderBy(['id' => SORT_ASC])->all();
+
+        if($icon != null) {
+            self::setSessionView($view_id, $icon);
+        }
 
         return $this->render('data', [
             'model' => $model,

@@ -46,10 +46,19 @@ class ProjectController extends Controller
         ]);
     }
 
-    public function actionList($view_id)
+    public function setSessionView($view_id, $icon) {
+        Yii::$app->session->set('icon', $icon);
+        Yii::$app->session->set('view_id', $view_id);
+    }
+
+    public function actionList($view_id, $icon = null)
     {
         $searchModel = new ProjectSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        if($icon != null) {
+            self::setSessionView($view_id, $icon);
+        }
 
         return $this->render('list', [
             'dataProvider' => $dataProvider,

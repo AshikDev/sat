@@ -11,7 +11,7 @@ use yii\widgets\ActiveForm;
 <div class="project-search">
 
     <?php $form = ActiveForm::begin([
-        'action' => ['index'],
+        'action' => ['list?view_id=' . $view_id],
         'method' => 'get',
         'options' => [
             'data-pjax' => 1

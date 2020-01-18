@@ -1,7 +1,10 @@
 <?php
 
+use app\models\BackgroundView;
 use yii\widgets\Breadcrumbs;
 use dmstr\widgets\Alert;
+
+$viewModelAll = BackgroundView::find()->all();
 
 ?>
 <div class="content-wrapper">
@@ -12,7 +15,9 @@ use dmstr\widgets\Alert;
             <h1>
                 <?php
                 if ($this->title !== null) {
-                    echo \yii\helpers\Html::encode($this->title);
+                    if(Yii::$app->controller->id != 'overview' || Yii::$app->controller->action->id != 'data') {
+                        echo \yii\helpers\Html::encode($this->title);
+                    }
                 } else {
                     echo \yii\helpers\Inflector::camel2words(
                         \yii\helpers\Inflector::id2camel($this->context->module->id)
@@ -53,55 +58,28 @@ use dmstr\widgets\Alert;
             <div>
                 <h3 class="control-sidebar-heading">Select a view</h3>
                 <ul class="control-sidebar-menu">
-                    <li class="bg-navy">
-                        <a href="javascript:void(0)">
-                            <i class="menu-icon fa fa-code bg-red"></i>
-                            <div class="menu-info">
-                                <h4 class="control-sidebar-subheading">Software View</h4>
-                                <p>Are you programmer?</p>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)">
-                            <i class="menu-icon fa fa-briefcase bg-yellow"></i>
-
-                            <div class="menu-info">
-                                <h4 class="control-sidebar-subheading">Business View</h4>
-                                <p>Interested in business?</p>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)">
-                            <i class="menu-icon fa fa-pencil-square-o bg-light-blue"></i>
-
-                            <div class="menu-info">
-                                <h4 class="control-sidebar-subheading">Desinger View</h4>
-                                <p>Are you designer?</p>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)">
-                            <i class="menu-icon fa fa-tablet bg-green"></i>
-
-                            <div class="menu-info">
-                                <h4 class="control-sidebar-subheading">Media View</h4>
-                                <p>Have a media background?</p>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)">
-                            <i class="menu-icon fa fa-plus-circle bg-purple"></i>
-
-                            <div class="menu-info">
-                                <h4 class="control-sidebar-subheading">Create a New View</h4>
-                                <p>None of the above?</p>
-                            </div>
-                        </a>
-                    </li>
+                    <?php
+                    foreach ($viewModelAll as $view) :
+                    ?>
+                        <li class="<?= (Yii::$app->session->has('view_id') && Yii::$app->session->get('view_id') == $view->id) ? 'bg-navy' : ''; ?>">
+                            <?php
+                            if(Yii::$app->controller->id == 'overview' && Yii::$app->controller->action->id == 'data') {
+                                $viewUrl = Yii::$app->request->baseUrl . '/overview/data?view_id=' . $view->id . '&project_id=' . Yii::$app->request->get('project_id') . '&icon=' . $view->icon;
+                            } else {
+                                $viewUrl = Yii::$app->request->baseUrl . '/project/list?view_id=' . $view->id . '&icon=' . $view->icon;
+                            }
+                            ?>
+                            <a href="<?= $viewUrl; ?>">
+                                <i class="menu-icon fa <?= $view->icon; ?> bg-<?= $view->color; ?>"></i>
+                                <div class="menu-info">
+                                    <h4 class="control-sidebar-subheading"><?= $view->name; ?></h4>
+                                    <p><?= $view->description; ?></p>
+                                </div>
+                            </a>
+                        </li>
+                    <?php
+                    endforeach;
+                    ?>
                 </ul>
             </div>
         </div>

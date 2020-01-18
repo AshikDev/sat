@@ -101,6 +101,18 @@
                     ],
                     ['label' => 'User Panel', 'options' => ['class' => 'header']],
                     [
+                        'label' => 'Home',
+                        'icon' => 'home',
+                        'url' => ['#'],
+                        'items' => [
+                            [
+                                'label' => 'Dashboard',
+                                'icon' => 'dashboard',
+                                'url' => ['/site/index'],
+                            ],
+                        ]
+                    ],
+                    [
                         'label' => 'Project',
                         'icon' => 'product-hunt',
                         'url' => ['#'],

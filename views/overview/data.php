@@ -1,6 +1,6 @@
 <?php
 
-$this->title = '';
+$this->title = $projectModel->name;
 
 $this->params['breadcrumbs'][] = ['label' => 'Select View', 'url' => ['site/index']];
 $this->params['breadcrumbs'][] = ['label' => 'Projects', 'url' => ['project/list?view_id=' . $view_id]];
@@ -122,7 +122,7 @@ $verticalColumn['short_description'] = [];
                                                                 if ($file->horizontal_id == $horizontal->id):
                                                                     if ($file->vertical_id == $vertical->id):
                                                                         ?>
-                                                                        <a href="<?= Yii::$app->request->baseUrl; ?>/data/download?file_name=<?= $file->name; ?>">
+                                                                        <a href="<?= Yii::$app->request->baseUrl; ?>/overview/download?file_name=<?= $file->name; ?>">
                                                                             <div class="col-md-6" data-toggle="popover"
                                                                                  title="Metadata"
                                                                                  data-content="<?= $file->metadata ?>">

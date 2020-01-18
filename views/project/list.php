@@ -1,10 +1,11 @@
 <?php
 
 use kartik\select2\Select2;
+use kartik\form\ActiveForm;
 use yii\widgets\ListView;
 
 $this->title = 'Projects';
-$this->params['breadcrumbs'][] = 'Select View';
+$this->params['breadcrumbs'][] = ['label' => 'Select View', 'url' => ['site/index']];
 $this->params['breadcrumbs'][] = $this->title;
 
 $data = ['Engineering', 'Computer Science', 'Psychology', 'Well-being', 'Economy', 'Biology', 'Medicine'];
@@ -12,17 +13,26 @@ $data2 = ['Latest', 'Oldest', 'Least Reading Time', 'Most Reading Time'];
 
 ?>
 
+<?php $form = ActiveForm::begin([
+    'action' => ['list?view_id=' . $view_id],
+    'method' => 'get',
+    'options' => [
+        'data-pjax' => 1
+    ],
+]); ?>
+
 <div class="row">
     <div class="col-md-12">
         <div class="box box-primary box-solid">
             <div class="box-header with-border">
                 <div class="col-md-3">
-                    <div class="input-group">
-                        <input type="text" class="form-control" , placeholder="Search">
-                        <div class="input-group-addon">
-                            <i class="fa fa-search"></i>
-                        </div>
-                    </div>
+                    <?php
+
+                    echo $form->field($searchModel, 'name', [
+                        'addon' => ['append' => ['content'=>'<i class="glyphicon glyphicon-search"></i>']]
+                    ])->label(false);
+
+                    ?>
                 </div>
                 <div class="col-md-3">
                     <div class="input-group">
@@ -81,3 +91,7 @@ $data2 = ['Latest', 'Oldest', 'Least Reading Time', 'Most Reading Time'];
         <!-- /.box -->
     </div>
 </div>
+
+<?= \yii\helpers\Html::submitButton('Search', ['class' => 'btn btn-primary hidden']) ?>
+
+<?php ActiveForm::end(); ?>

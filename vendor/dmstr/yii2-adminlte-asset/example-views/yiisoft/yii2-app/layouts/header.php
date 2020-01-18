@@ -68,7 +68,7 @@ $shortName = Yii::$app->name;
 
                 <!-- User Account: style can be found in dropdown.less -->
                 <li>
-                    <a href="#" data-toggle="control-sidebar"><i class="fa fa-code"> </i></a>
+                    <a href="#" data-toggle="control-sidebar"><i class="fa <?= (Yii::$app->session->has('icon')) ? Yii::$app->session->get('icon') : 'fa-question-circle' ?>"> </i></a>
                 </li>
             </ul>
         </div>
