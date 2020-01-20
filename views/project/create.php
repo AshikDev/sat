@@ -20,6 +20,7 @@ $this->params['wizard'][] = '04. Add Files';
 
     <?= $this->render('_form', [
         'model' => $model,
+        'contentModels' => $contentModels
     ]) ?>
 
 </div>

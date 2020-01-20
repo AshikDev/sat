@@ -57,12 +57,14 @@ use kartik\file\FileInput;
                     'options' => ['accept' => 'image/*', 'multiple' => false],
                     'pluginOptions' => [
                         'initialPreview'=>[
-                            ($model->logo != null) ? Html::img( Yii::$app->request->baseUrl . "/img/" . $model->logo) : '',
+                            ($model->logo != null) ? Html::img( Yii::$app->request->baseUrl . "/img/" . $model->logo) : null,
                         ],
                         'overwriteInitial'=>true,
                         'showUpload' => false
                     ]
                 ]);?>
+
+                <?=  $form->field($model, 'extra')->dropDownList($contentModels, ['multiple' => false, 'prompt' => 'Select a field of research']); ?>
 
             </div>
             <!-- /.box-body -->

@@ -9,7 +9,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Select View', 'url' => ['site/inde
 $this->params['breadcrumbs'][] = $this->title;
 
 $data = ['Engineering', 'Computer Science', 'Psychology', 'Well-being', 'Economy', 'Biology', 'Medicine'];
-$data2 = ['Latest', 'Oldest', 'Least Reading Time', 'Most Reading Time'];
+$data2 = [ 1 => 'Latest', 2 => 'Oldest', 3 => 'Least Reading Time', 4 => 'Most Reading Time'];
 
 ?>
 
@@ -36,55 +36,65 @@ $data2 = ['Latest', 'Oldest', 'Least Reading Time', 'Most Reading Time'];
                 </div>
                 <div class="col-md-3">
                     <div class="input-group">
+
                         <?php
 
-                        // Multiple select without model
-                        echo Select2::widget([
-                            'name' => 'research',
-                            'data' => $data,
-                            'options' => ['multiple' => true, 'placeholder' => 'Field of research'],
-                        ]);
+                        echo $form->field($searchModel, 'extra')->widget(Select2::classname(), [
+                            'data' => $contentModels,
+                            'options' => [
+                                'placeholder' => 'Select a field of research',
+                                'multiple' => true
+                            ],
+                            'pluginOptions' => [
+                                'allowClear' => true
+                            ],
+                        ])->label(false)->error(false);
 
                         ?>
+
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="input-group">
                         <?php
 
-                        // Multiple select without model
-                        echo Select2::widget([
-                            'name' => 'sort',
+                        echo $form->field($searchModel, 'sort')->widget(Select2::classname(), [
                             'data' => $data2,
                             'options' => ['placeholder' => 'Sort by'],
                             'pluginOptions' => [
                                 'allowClear' => true
                             ],
-                        ]);
+                        ])->label(false)->error(false);
 
                         ?>
                     </div>
                 </div>
 
+                <div class="btn-group" role="group">
+                    <?= \yii\helpers\Html::resetButton('Reset', ['class' => 'btn btn-danger']) ?>
+                        <?= \yii\helpers\Html::submitButton('Search', ['class' => 'btn btn-success']) ?>
+                </div>
+
+
+
                 <div class="box-tools pull-right">
                     <div class="btn-group">
-                        <button type="button" class="btn btn-default"><i class="fa fa-list-ul"></i></button>
-                        <button type="button" class="btn btn-default"><i class="fa fa-th"></i></button>
+                        <button type="button" class="btn btn-default" id="list_button"><i class="fa fa-list-ul"></i></button>
+                        <button type="button" class="btn btn-default" id="grid_button"><i class="fa fa-th"></i></button>
                     </div>
                 </div>
                 <!-- /.box-tools -->
             </div>
             <!-- /.box-header -->
             <div class="box-body">
+                    <?php
 
-                <?php
+                    echo ListView::widget([
+                        'dataProvider' => $dataProvider,
+                        'itemView' => '_list',
+                    ]);
 
-                echo ListView::widget([
-                    'dataProvider' => $dataProvider,
-                    'itemView' => '_list',
-                ]);
-
-                ?>
+                    ?>
             </div>
             <!-- /.box-body -->
         </div>
@@ -92,6 +102,32 @@ $data2 = ['Latest', 'Oldest', 'Least Reading Time', 'Most Reading Time'];
     </div>
 </div>
 
-<?= \yii\helpers\Html::submitButton('Search', ['class' => 'btn btn-primary hidden']) ?>
-
 <?php ActiveForm::end(); ?>
+
+<?php
+$this->registerJs("
+
+    $('#grid_button').click(function() {
+        $('.list_row').removeClass('row');
+        $('.list_grid_col').removeClass('col-md-12');
+        $('.list_grid_col').addClass('col-md-4');
+        
+        $('#grid_button').removeClass('btn-default');
+        $('#grid_button').addClass('btn-info');
+        $('#list_button').addClass('btn-default');
+        $('#list_button').removeClass('btn-info');
+    });
+    
+    $('#list_button').click(function() {
+        $('.list_row').addClass('row');
+        $('.list_grid_col').removeClass('col-md-4');
+        $('.list_grid_col').addClass('col-md-12');
+        
+        $('#list_button').removeClass('btn-default');
+        $('#list_button').addClass('btn-info');
+        $('#grid_button').addClass('btn-default');
+        $('#grid_button').removeClass('btn-info');
+    });
+    
+    ", \yii\web\View::POS_READY);
+?>

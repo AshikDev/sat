@@ -1,5 +1,5 @@
-<div class="row">
-    <div class="col-md-12">
+<div class="list_row row">
+    <div class="list_grid_col col-md-12">
         <!-- Box Comment -->
         <div class="box box-widget">
             <div class="box-header with-border">
@@ -10,7 +10,7 @@
                 </div>
             </div>
             <!-- /.box-header -->
-            <div class="box-body">
+            <div class="box-body" style="text-align: justify">
                 <p>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin nec convallis odio. Sed vitae ligula in ipsum iaculis cursus. Fusce fermentum risus in tincidunt iaculis. In accumsan aliquam mi lacinia tincidunt. Nunc eu lacus tincidunt, cursus urna quis, pharetra sem. Morbi euismod elementum diam, ut auctor sem feugiat id. Integer dictum sollicitudin odio, id bibendum sem vehicula sit amet. Donec ut quam nulla. Duis auctor justo sapien, eu viverra est porta at.
                 </p>

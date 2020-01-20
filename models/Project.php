@@ -59,7 +59,7 @@ class Project extends \yii\db\ActiveRecord
             'date_from' => 'From',
             'date_to' => 'To',
             'logo' => 'Logo',
-            'extra' => 'Extra',
+            'extra' => 'Field of research',
         ];
     }
 

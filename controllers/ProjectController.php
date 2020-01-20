@@ -2,10 +2,12 @@
 
 namespace app\controllers;
 
+use app\models\Content;
 use Yii;
 use app\models\Project;
 use app\models\ProjectSearch;
 use yii\data\ActiveDataProvider;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -60,10 +62,13 @@ class ProjectController extends Controller
             self::setSessionView($view_id, $icon);
         }
 
+        $contentModels = ArrayHelper::map(Content::find()->all(), 'name', 'name');
+
         return $this->render('list', [
             'dataProvider' => $dataProvider,
             'searchModel' => $searchModel,
-            'view_id' => $view_id
+            'view_id' => $view_id,
+            'contentModels' => $contentModels
         ]);
     }
 
@@ -89,6 +94,8 @@ class ProjectController extends Controller
     {
         $model = new Project();
 
+        $contentModels = ArrayHelper::map(Content::find()->all(), 'name', 'name');
+
         if ($model->load(Yii::$app->request->post())) {
             $upload = UploadedFile::getInstance($model, 'logo');
             $model->logo = time() . Yii::$app->user->identity->id . '.' . $upload->extension;
@@ -100,6 +107,7 @@ class ProjectController extends Controller
 
         return $this->render('create', [
             'model' => $model,
+            'contentModels' => $contentModels
         ]);
     }
 
@@ -114,6 +122,8 @@ class ProjectController extends Controller
     {
         $model = $this->findModel($id);
         $logo = $model->logo;
+
+        $contentModels = ArrayHelper::map(Content::find()->all(), 'name', 'name');
 
         if ($model->load(Yii::$app->request->post())) {
             $upload = UploadedFile::getInstance($model, 'logo');
@@ -132,6 +142,7 @@ class ProjectController extends Controller
 
         return $this->render('update', [
             'model' => $model,
+            'contentModels' => $contentModels
         ]);
     }
 
