@@ -72,7 +72,7 @@ $data2 = [ 1 => 'Latest', 2 => 'Oldest', 3 => 'Least Reading Time', 4 => 'Most R
 
                 <div class="btn-group" role="group">
                     <?= \yii\helpers\Html::resetButton('Reset', ['class' => 'btn btn-danger']) ?>
-                        <?= \yii\helpers\Html::submitButton('Search', ['class' => 'btn btn-success']) ?>
+                    <?= \yii\helpers\Html::submitButton('Search', ['class' => 'btn btn-success']) ?>
                 </div>
 
 
