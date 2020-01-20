@@ -12,6 +12,7 @@ use app\models\OverviewSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * OverviewController implements the CRUD actions for Overview model.
@@ -98,6 +99,56 @@ class OverviewController extends Controller
         ]);
     }
 
+    public function getFileProperties($extension) {
+        $properties = [];
+        $type = [];
+        $icon = [];
+
+        $extension = strtolower($extension);
+
+        $imageExtensions = ["jpg", "png", "jpeg", "gif"];
+        $videoExtensions = ["avi", "flv", "wmv", "mp4", "mov"];
+        $audioExtensions = ["mp3", "wav"];
+        $docExtensions = ["doc", "docx", "odt"];
+        $excelExtensions = ["xls", "xlsx", "csv"];
+        $pptExtensions = ["ppt", "pptx"];
+        $pdfExtensions = ["pdf"];
+        $zipExtensions = ["zip", "rar", "7z"];
+
+        if(in_array($extension, $imageExtensions)) {
+            $type['name'] = "image";
+            $icon['fa'] = "fa-image";
+        } else if(in_array($extension, $videoExtensions)) {
+            $type['name'] = "video";
+            $icon['fa'] = "fa-file-video-o";
+        } else if(in_array($extension, $audioExtensions)) {
+            $type['name'] = "audio";
+            $icon['fa'] = "fa-file-audio-o";
+        } else if(in_array($extension, $docExtensions)) {
+            $type['name'] = "doc";
+            $icon['fa'] = "fa-file";
+        } else if(in_array($extension, $excelExtensions)) {
+            $type['name'] = "excel";
+            $icon['fa'] = "fa-file";
+        } else if(in_array($extension, $pptExtensions)) {
+            $type['name'] = "ppt";
+            $icon['fa'] = "fa-pied-piper-pp";
+        } else if(in_array($extension, $pdfExtensions)) {
+            $type['name'] = "pdf";
+            $icon['fa'] = "fa-file-pdf-o";
+        } else if(in_array($extension, $zipExtensions)) {
+            $type['name'] = "zip";
+            $icon['fa'] = "fa-file-archive-o";
+        } else {
+            $type['name'] = "unknown";
+            $icon['fa'] = "fa-file";
+        }
+
+        $properties = $type + $icon;
+
+        return $properties;
+    }
+
     /**
      * Creates a new Overview model.
      * If creation is successful, the browser will be redirected to the 'view' page.
@@ -111,7 +162,11 @@ class OverviewController extends Controller
             switch (\Yii::$app->request->post('submit')) {
                 case 'more':
                     $model->project_id = $project_id;
+                    $upload = UploadedFile::getInstance($model, 'extra');
+                    $model->extra = time() . Yii::$app->user->identity->id . '.' . $upload->extension;
+
                     if($model->save()) {
+                        $upload->saveAs(Yii::getAlias('@app/web/img') . '/' . $model->extra);
                         Yii::$app->session->setFlash('success', 'Project overview has successfully been saved.');
                         return $this->refresh();
                     }
@@ -122,7 +177,11 @@ class OverviewController extends Controller
                         return $this->redirect(['vertical/create', 'project_id' => $project_id]);
                     } else {
                         $model->project_id = $project_id;
+                        $upload = UploadedFile::getInstance($model, 'extra');
+                        $model->extra = time() . Yii::$app->user->identity->id . '.' . $upload->extension;
+
                         if($model->save()) {
+                            $upload->saveAs(Yii::getAlias('@app/web/img') . '/' . $model->extra);
                             Yii::$app->session->setFlash('success', 'Project overview has successfully been saved.');
                             return $this->redirect(['vertical/create', 'project_id' => $project_id]);
                         }
@@ -144,7 +203,11 @@ class OverviewController extends Controller
             switch (\Yii::$app->request->post('submit')) {
                 case 'more':
                     $model->project_id = $project_id;
+                    $upload = UploadedFile::getInstance($model, 'extra');
+                    $model->extra = time() . Yii::$app->user->identity->id . '.' . $upload->extension;
+
                     if($model->save()) {
+                        $upload->saveAs(Yii::getAlias('@app/web/img') . '/' . $model->extra);
                         Yii::$app->session->setFlash('success', 'Project overview has successfully been saved.');
                         return $this->refresh();
                     }
@@ -155,7 +218,11 @@ class OverviewController extends Controller
                         return $this->redirect(['vertical/edit', 'project_id' => $project_id, 'project_name' => $project_name]);
                     } else {
                         $model->project_id = $project_id;
+                        $upload = UploadedFile::getInstance($model, 'extra');
+                        $model->extra = time() . Yii::$app->user->identity->id . '.' . $upload->extension;
+
                         if($model->save()) {
+                            $upload->saveAs(Yii::getAlias('@app/web/img') . '/' . $model->extra);
                             Yii::$app->session->setFlash('success', 'Project overview has successfully been saved.');
                             return $this->redirect(['vertical/edit', 'project_id' => $project_id, 'project_name' => $project_name]);
                         }
@@ -185,7 +252,12 @@ class OverviewController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
             $model->project_id = $project_id;
+
+            $upload = UploadedFile::getInstance($model, 'extra');
+            $model->extra = time() . Yii::$app->user->identity->id . '.' . $upload->extension;
+
             if($model->save()) {
+                $upload->saveAs(Yii::getAlias('@app/web/img') . '/' . $model->extra);
                 Yii::$app->session->setFlash('success', 'Project overview has successfully been saved.');
             }
         }

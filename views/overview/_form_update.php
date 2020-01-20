@@ -3,10 +3,12 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use kartik\markdown\MarkdownEditor;
+use kartik\file\FileInput;
 ?>
 
 <?php $form = ActiveForm::begin([
     'enableClientValidation' => false,
+    'options' => ['enctype' => 'multipart/form-data']
 ]); ?>
 
 <div class="row">
@@ -27,6 +29,21 @@ use kartik\markdown\MarkdownEditor;
                     MarkdownEditor::classname(),
                     ['height' => 150]
                 ); ?>
+
+                <?php
+
+                echo $form->field($model, 'extra')->widget(FileInput::className(), [
+                    'options' => ['accept' => '*', 'multiple' => false],
+                    'pluginOptions' => [
+                        'initialPreview'=>[
+                            ($model->extra != null) ? Html::img( Yii::$app->request->baseUrl . "/img/" . $model->extra) : null,
+                        ],
+                        'overwriteInitial'=>true,
+                        'showUpload' => false
+                    ]
+                ]);
+
+                ?>
 
             </div>
             <!-- /.box-body -->

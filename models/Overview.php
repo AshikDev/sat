@@ -34,7 +34,7 @@ class Overview extends \yii\db\ActiveRecord
             [['title', 'paragraph'], 'required'],
             [['title', 'paragraph'], 'string'],
             [['project_id'], 'integer'],
-            [['extra'], 'string', 'max' => 80],
+            ['extra', 'file', 'skipOnEmpty' => true, 'maxSize' => 1000240000],
             [['project_id'], 'exist', 'skipOnError' => true, 'targetClass' => Project::className(), 'targetAttribute' => ['project_id' => 'id']],
         ];
     }
@@ -49,7 +49,7 @@ class Overview extends \yii\db\ActiveRecord
             'title' => 'Title',
             'paragraph' => 'Paragraph',
             'project_id' => 'Project',
-            'extra' => 'Extra',
+            'extra' => 'File',
         ];
     }
 

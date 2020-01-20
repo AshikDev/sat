@@ -53,10 +53,41 @@ $verticalColumn['short_description'] = [];
                                         foreach ($model as $overview):
                                             ?>
                                             <div class="post <?= ($i === 0) ? '' : 'clearfix'; ?>">
+
+
+                                                <?php
+                                                if(!empty($overview->extra)) :
+                                                ?>
+                                                <div class="row" id="<?= str_replace(' ', '', $overview->title); ?>-po">
+                                                    <a href="<?= Yii::$app->request->baseUrl; ?>/overview/download?file_name=<?= $overview->extra; ?>">
+                                                        <div class="col-md-12" data-toggle="popover"
+                                                             title="Metadata"
+                                                             data-content="<?= $overview->title ?>">
+                                                            <div class="info-box bg-aqua">
+                                                                                <span class="info-box-icon">
+                                                                                    <i class="fa fa-file"></i>
+                                                                                </span>
+                                                                <div class="info-box-content">
+                                                                                    <span class="info-box-text"
+                                                                                          style="font-size: 15px;"><?= $overview->title ?></span>
+                                                                    <span class="info-box-text"
+                                                                          style="font-weight: bold; font-size: 15px; text-transform: none;"><?= $overview->paragraph ?></span>
+                                                                </div>
+                                                                <!-- /.info-box-content -->
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <?php
+                                                else:
+                                                ?>
                                                 <h3 id="<?= str_replace(' ', '', $overview->title); ?>-po"><?= $overview->title; ?></h3>
                                                 <div>
                                                     <?= $overview->paragraph; ?>
                                                 </div>
+                                                <?php
+                                                endif;
+                                                ?>
                                             </div>
                                             <?php
                                             $i++;
@@ -104,15 +135,18 @@ $verticalColumn['short_description'] = [];
                                         <div class="col-md-8">
                                             <?php
                                             $x = 0;
+                                            $verticalArray = [];
                                             foreach ($verticalModel as $vertical):
                                                 if ($vertical->horizontal_id == $horizontal->id):
+                                                    $verticalArray['id'][$x] = $vertical->id;
                                                     $verticalArray['name'][$x] = $vertical->name;
+                                                    $verticalArray['name_solid'][$x] = str_replace(' ', '',$vertical->name);
                                                     $verticalArray['short_description'][$x] = substr($vertical->description, 0, 70);
                                                     $x++;
                                                     ?>
                                                     <!-- Post -->
                                                     <div class="post <?= ($x == 1) ? '' : 'clearfix'; ?>">
-                                                        <h3><?= $vertical->name; ?></h3>
+                                                        <h3 id="<?= str_replace(' ', '', $vertical->name); ?>-<?= $vertical->id ?>"><?= $vertical->name; ?></h3>
                                                         <p>
                                                             <?= $vertical->description; ?>
                                                         </p>
@@ -178,7 +212,7 @@ $verticalColumn['short_description'] = [];
                                                             <div class="timeline-item">
 
                                                                 <h3 class="timeline-header">
-                                                                    <a href="#">
+                                                                    <a href="#<?= $verticalArray['name_solid'][$i] ?>-<?= $verticalArray['id'][$i]; ?>">
                                                                         <?= $verticalArray['name'][$i]; ?>
                                                                     </a>
                                                                 </h3>
@@ -229,6 +263,7 @@ $this->registerJs("
         placement : 'top',
         trigger : 'hover'
     });
+    
 ", \yii\web\View::POS_READY);
 
 ?>
