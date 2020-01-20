@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = '04. ' . $this->params['subTitle'];
 
 $this->params['wizard'][] = ['label' => '01. Update Project', 'url' => ['project/create?id=' . $project_id]];
 $this->params['wizard'][] = ['label' => '02. Update Overview', 'url' => ['overview/edit?project_id=' . $project_id . '&project_name=' . $project_name]];
-$this->params['wizard'][] = ['label' => '03. Update Depth', 'url' => ['vertical/edit?project_id=' . $project_id . '&project_name=' . $project_name]];
+$this->params['wizard'][] = ['label' => '03. Update Layer', 'url' => ['vertical/edit?project_id=' . $project_id . '&project_name=' . $project_name]];
 $this->params['wizard'][] = ['label' => '04. ' . $this->params['subTitle'], 'url' => ['depth/edit?project_id=' . $project_id . '&project_name=' . $project_name]];
 
 ?>

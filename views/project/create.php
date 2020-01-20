@@ -12,7 +12,7 @@ $this->params['breadcrumbs'][] = '01. ' . $this->params['subTitle'];
 
 $this->params['wizard'][] = ['label' => '01. ' . $this->params['subTitle'], 'url' => ['create']];
 $this->params['wizard'][] = '02. Add Overview';
-$this->params['wizard'][] = '03. Add Depth';
+$this->params['wizard'][] = '03. Add Layer';
 $this->params['wizard'][] = '04. Add Files';
 
 ?>

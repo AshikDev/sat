@@ -66,7 +66,7 @@
                         ]
                     ],
                     [
-                        'label' => 'Phase',
+                        'label' => 'Section',
                         'icon' => 'align-justify',
                         'url' => ['#'],
                         'items' => [
@@ -76,14 +76,14 @@
                                 'url' => ['/horizontal/create'],
                             ],
                             [
-                                'label' => 'Phase List',
+                                'label' => 'Section List',
                                 'icon' => 'list',
                                 'url' => ['/horizontal/index'],
                             ]
                         ]
                     ],
                     [
-                        'label' => 'Depth',
+                        'label' => 'Layer',
                         'icon' => 'cubes',
                         'url' => ['#'],
                         'items' => [
@@ -93,7 +93,7 @@
                                 'url' => ['/depth/create'],
                             ],
                             [
-                                'label' => 'Depth List',
+                                'label' => 'Layer List',
                                 'icon' => 'list',
                                 'url' => ['/depth/index'],
                             ]
