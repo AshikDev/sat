@@ -32,23 +32,6 @@
                 'items' => [
                     ['label' => 'Administration', 'options' => ['class' => 'header']],
                     [
-                        'label' => 'Content',
-                        'icon' => 'file',
-                        'url' => ['#'],
-                        'items' => [
-                            [
-                                'label' => 'Create New',
-                                'icon' => 'plus',
-                                'url' => ['/content/create'],
-                            ],
-                            [
-                                'label' => 'Content List',
-                                'icon' => 'list',
-                                'url' => ['/content/index'],
-                            ]
-                        ]
-                    ],
-                    [
                         'label' => 'View',
                         'icon' => 'eye',
                         'url' => ['#'],

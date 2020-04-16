@@ -64,9 +64,9 @@ $viewModelAll = BackgroundView::find()->all();
                         <li class="<?= (Yii::$app->session->has('view_id') && Yii::$app->session->get('view_id') == $view->id) ? 'bg-navy' : ''; ?>">
                             <?php
                             if(Yii::$app->controller->id == 'overview' && Yii::$app->controller->action->id == 'data') {
-                                $viewUrl = Yii::$app->request->baseUrl . '/overview/data?view_id=' . $view->id . '&project_id=' . Yii::$app->request->get('project_id') . '&icon=' . $view->icon;
+                                $viewUrl = Yii::$app->request->baseUrl . '/index.php/overview/data?view_id=' . $view->id . '&project_id=' . Yii::$app->request->get('project_id') . '&icon=' . $view->icon;
                             } else {
-                                $viewUrl = Yii::$app->request->baseUrl . '/project/list?view_id=' . $view->id . '&icon=' . $view->icon;
+                                $viewUrl = Yii::$app->request->baseUrl . '/index.php/project/list?view_id=' . $view->id . '&icon=' . $view->icon;
                             }
                             ?>
                             <a href="<?= $viewUrl; ?>">

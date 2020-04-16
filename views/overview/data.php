@@ -56,35 +56,36 @@ $verticalColumn['short_description'] = [];
 
 
                                                 <?php
-                                                if(!empty($overview->extra)) :
-                                                ?>
-                                                <div class="row" id="<?= str_replace(' ', '', $overview->title); ?>-po">
-                                                    <a href="<?= Yii::$app->request->baseUrl; ?>/overview/download?file_name=<?= $overview->extra; ?>">
-                                                        <div class="col-md-12" data-toggle="popover"
-                                                             title="Metadata"
-                                                             data-content="<?= $overview->title ?>">
-                                                            <div class="info-box bg-aqua">
+                                                if (!empty($overview->extra)) :
+                                                    ?>
+                                                    <div class="row"
+                                                         id="<?= str_replace(' ', '', $overview->title); ?>-po">
+                                                        <a href="<?= Yii::$app->request->baseUrl; ?>/index.php/overview/download?file_name=<?= $overview->extra; ?>">
+                                                            <div class="col-md-12" data-toggle="popover"
+                                                                 title="Metadata"
+                                                                 data-content="<?= $overview->title ?>">
+                                                                <div class="info-box bg-aqua">
                                                                                 <span class="info-box-icon">
                                                                                     <i class="fa fa-file"></i>
                                                                                 </span>
-                                                                <div class="info-box-content">
+                                                                    <div class="info-box-content">
                                                                                     <span class="info-box-text"
                                                                                           style="font-size: 15px;"><?= $overview->title ?></span>
-                                                                    <span class="info-box-text"
-                                                                          style="font-weight: bold; font-size: 15px; text-transform: none;"><?= $overview->paragraph ?></span>
+                                                                        <span class="info-box-text"
+                                                                              style="font-weight: bold; font-size: 15px; text-transform: none;"><?= $overview->paragraph ?></span>
+                                                                    </div>
+                                                                    <!-- /.info-box-content -->
                                                                 </div>
-                                                                <!-- /.info-box-content -->
                                                             </div>
-                                                        </div>
-                                                    </a>
-                                                </div>
+                                                        </a>
+                                                    </div>
                                                 <?php
                                                 else:
-                                                ?>
-                                                <h3 id="<?= str_replace(' ', '', $overview->title); ?>-po"><?= $overview->title; ?></h3>
-                                                <div>
-                                                    <?= $overview->paragraph; ?>
-                                                </div>
+                                                    ?>
+                                                    <h3 id="<?= str_replace(' ', '', $overview->title); ?>-po"><?= $overview->title; ?></h3>
+                                                    <div>
+                                                        <?= $overview->paragraph; ?>
+                                                    </div>
                                                 <?php
                                                 endif;
                                                 ?>
@@ -140,7 +141,7 @@ $verticalColumn['short_description'] = [];
                                                 if ($vertical->horizontal_id == $horizontal->id):
                                                     $verticalArray['id'][$x] = $vertical->id;
                                                     $verticalArray['name'][$x] = $vertical->name;
-                                                    $verticalArray['name_solid'][$x] = str_replace(' ', '',$vertical->name);
+                                                    $verticalArray['name_solid'][$x] = str_replace(' ', '', $vertical->name);
                                                     $verticalArray['short_description'][$x] = substr($vertical->description, 0, 70);
                                                     $x++;
                                                     ?>
@@ -156,10 +157,10 @@ $verticalColumn['short_description'] = [];
                                                                 if ($file->horizontal_id == $horizontal->id):
                                                                     if ($file->vertical_id == $vertical->id):
                                                                         ?>
-                                                                        <a href="<?= Yii::$app->request->baseUrl; ?>/overview/download?file_name=<?= $file->name; ?>">
+                                                                        <a href="<?= Yii::$app->request->baseUrl; ?>/index.php/overview/download?file_name=<?= $file->name; ?>">
                                                                             <div class="col-md-6" data-toggle="popover"
                                                                                  title="Metadata"
-                                                                                 data-content="<?= $file->metadata ?>">
+                                                                                 data-content='<?= $file->metadata ?>'>
                                                                                 <div class="info-box bg-aqua">
                                                                                 <span class="info-box-icon">
                                                                                     <i class="fa <?= $file->icon; ?>"></i>
