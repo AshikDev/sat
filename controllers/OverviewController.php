@@ -84,6 +84,14 @@ class OverviewController extends Controller
         $horizontalModel = Horizontal::find()->where(['view_id' => $view_id])->orderBy(['sort_order' => SORT_ASC, 'id' => SORT_ASC])->all();
         $verticalModel = Vertical::find()->where(['view_id' => $view_id, 'project_id' => $project_id])->orderBy(['sort_order' => SORT_ASC, 'id' => SORT_ASC])->all();
         $fileModel = File::find()->where(['view_id' => $view_id, 'project_id' => $project_id])->orderBy(['id' => SORT_ASC])->all();
+        // $fileMaxModel = File::find()->select(['MAX(estimate_time) as estimate_time'])->where(['view_id' => $view_id, 'project_id' => $project_id])->one();
+        $alternativeView = File::find()
+            ->select(['background_view.name as name', 'background_view.icon as icon', 'background_view.id as view_id'])
+            ->where(['project_id' => $project_id])
+            ->andWhere(['<>', 'view_id', $view_id])
+            ->joinWith('view')
+            ->distinct()
+            ->all();
 
         if($icon != null) {
             self::setSessionView($view_id, $icon);
@@ -95,7 +103,9 @@ class OverviewController extends Controller
             'horizontalModel' => $horizontalModel,
             'verticalModel' => $verticalModel,
             'fileModel' => $fileModel,
-            'view_id' => $view_id
+            'view_id' => $view_id,
+            'alternativeView' => $alternativeView,
+            'maxTime' => 120
         ]);
     }
 
