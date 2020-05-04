@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\File;
 use app\models\Horizontal;
+use app\models\Link;
 use app\models\Project;
 use app\models\Vertical;
 use Yii;
@@ -92,6 +93,34 @@ class OverviewController extends Controller
             ->joinWith('view')
             ->distinct()
             ->all();
+
+        if ((empty($horizontalModel) || empty($verticalModel)) && !empty($alternativeView)) {
+
+            $linkViewIds = Link::find()
+                ->select(['view_ids'])
+                ->where(['project_id' => $project_id])
+                ->scalar();
+
+            if(($linkViewIds) && !empty($linkViewIds)) {
+                $linkViewIdArray = explode(',', $linkViewIds);
+                if(in_array($view_id, $linkViewIdArray)) {
+                    $alternativeViewOne = File::find()
+                        ->select(['background_view.id as view_id'])
+                        ->where(['project_id' => $project_id])
+                        ->andWhere(['<>', 'view_id', $view_id])
+                        ->andWhere(['in', 'background_view.id', $linkViewIdArray])
+                        ->joinWith('view')
+                        ->distinct()
+                        ->one();
+
+                    if(isset($alternativeViewOne->view_id) && !empty($alternativeViewOne->view_id)) {
+                        $horizontalModel = Horizontal::find()->where(['view_id' => $alternativeViewOne->view_id])->orderBy(['sort_order' => SORT_ASC, 'id' => SORT_ASC])->all();
+                        $verticalModel = Vertical::find()->where(['view_id' => $alternativeViewOne->view_id, 'project_id' => $project_id])->orderBy(['sort_order' => SORT_ASC, 'id' => SORT_ASC])->all();
+                        $fileModel = File::find()->where(['view_id' => $alternativeViewOne->view_id, 'project_id' => $project_id])->orderBy(['id' => SORT_ASC])->all();
+                    }
+                }
+            }
+        }
 
         if($icon != null) {
             self::setSessionView($view_id, $icon);

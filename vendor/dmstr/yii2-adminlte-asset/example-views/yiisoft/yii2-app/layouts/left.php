@@ -114,6 +114,16 @@
                                 'label' => 'Overview List',
                                 'icon' => 'list',
                                 'url' => ['/overview/index'],
+                            ],
+                            [
+                                'label' => 'Connect views',
+                                'icon' => 'compress',
+                                'url' => ['/link/create'],
+                            ],
+                            [
+                                'label' => 'List of Views',
+                                'icon' => 'list',
+                                'url' => ['/link/index'],
                             ]
                         ]
                     ],
